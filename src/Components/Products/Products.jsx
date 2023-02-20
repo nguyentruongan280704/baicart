@@ -1,10 +1,15 @@
 import "./products.css";
-import React from "react";
-import airport from "../../imagex/apple-airpods-pro-2-2022-didongviet.png"
-import gear from "../../imagex/macbook-pro-14-inc.jpg"
-import iphone from "../../imagex/iPhone-14-Pro-Max-3.jpg"
-import samsung from "../../imagex/Gear-Samsung-Galaxy-S22-Ultra.webp"
-function Products() {
+import React, { useEffect, useState } from "react";
+
+function Products(props) {
+    let  {
+        dataProduct,
+        handleSumbit,
+        valueInput,
+        contenCart,
+        handleClickDelete,
+        tudulist
+    } = props;
     return (
         <>
             <div class="container">
@@ -12,58 +17,27 @@ function Products() {
                     <div class="products">
                         <p>List Products</p>
                     </div>
-                    <div class="family">
-                        <div className="image">
-                            <img src={ airport } alt="" />
+
+                    { dataProduct.map((e, i) => (<div class="family">
+
+                        <div class="image">
+                            <img src={ e.image } alt="" />
                         </div>
                         <div class="airpods">
-                            <h2>Air Pods Pro</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. At dicta asperiores veniam repellat unde debitis quisquam magnam magni ut deleniti!</p>
+                            <h2>{ e.name }</h2>
+                            <p>{ e.content }</p>
                         </div>
-                        <div class="botton">
-                            <input type="number" />
-                            <button>12 USD</button>
-                        </div>
-                    </div>
-                    <div class="family">
-                        <div className="image">
-                            <img src={ gear } alt="" />
-                        </div>
-                        <div class="airpods">
-                            <h2>Macbook</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. At dicta asperiores veniam repellat unde debitis quisquam magnam magni ut deleniti!</p>
-                        </div>
-                        <div class="botton">
-                            <input type="number" />
-                            <button>12 USD</button>
-                        </div>
-                    </div>
-                    <div class="family">
-                        <div className="image">
-                            <img src={ iphone } alt="" />
-                        </div>
-                        <div class="airpods">
-                            <h2>Iphone 14 Promax</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. At dicta asperiores veniam repellat unde debitis quisquam magnam magni ut deleniti!</p>
-                        </div>
-                        <div class="botton">
-                            <input type="number" />
-                            <button>12 USD</button>
-                        </div>
-                    </div>
-                    <div class="family">
-                        <div className="image">
-                            <img src={ samsung } alt="" />
-                        </div>
-                        <div class="airpods">
-                            <h2>Sam Sung Galaxy S22 Ultra</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. At dicta asperiores veniam repellat unde debitis quisquam magnam magni ut deleniti!</p>
-                        </div>
-                        <div class="botton">
-                            <input type="number" />
-                            <button>12 USD</button>
-                        </div>
-                    </div>
+                        <form class="botton" onSubmit={handleSumbit} action='' id={e.id}>
+                            <input 
+                            id={e.id}
+                            type="number" 
+                            name='name'
+                            value={valueInput}
+                            defaultValue={1}    
+                            min={1} />
+                            <button id={e.id}>{ e.price } USD</button>
+                        </form>
+                    </div>)) }
                 </div>
                 <div class="from2">
                     <div class="products1">
@@ -78,23 +52,28 @@ function Products() {
                             <p>Subtotal</p>
                             <p>Action</p>
                         </div>
-                        <div className="tudulis1">
+                        {contenCart.map((e, i) => (
+                        <div key={i} className="tudulis1">
                             <label>1</label>
-                            <p class="lorem">Lorem ipsum.</p>
-                            <p className="use">12 USD</p>
-                            <input type="number" name="" id="" />
-                            <p className="use1">12 USD</p>
+                            <p class="lorem">{e.name}</p>
+                            <p className="use">{e.price} USD</p>
+                            <p className='quantity'>{e.quantity}</p>
+                            <p className="use1">{e.list_subtotal} USD</p>
                             <div class="updelete">
                                 <button className="update">Update</button>
-                                <button className="delete">Delete</button>
+                                <button  
+                                 id={e.id}
+                                onClick={handleClickDelete}
+                                 className="delete">Delete</button>
                             </div>
                         </div>
+                        ))}
                         <div class="empty">
                             <p>Empty product in your cart</p>
                         </div>
                         <div class="there">
                             <label>There are 5 items in your shopping cart.</label>
-                            <p>12 USD</p>
+                            <p>{ tudulist } USD</p>
                         </div>
                     </div>
                     <div class="products2">
